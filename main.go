@@ -14,20 +14,20 @@ import (
 )
 
 var flagDir = flag.String("dir", "", "directory to store html files. By default ./news is used and created if necessary")
-var flagTimeout = flag.Int("timeout", 10, "timeout in seconds when fetching feeds")
-var flagUpdateInterval = flag.Int("wait", 10, "minutes to wait between updates")
+var flagTimeout = flag.Duration("timeout", 10*time.Second, "timeout in seconds when fetching feeds")
+var flagUpdateInterval = flag.Duration("wait", 10*time.Minute, "minutes to wait between updates")
 var flagItemsPerPage = flag.Int("items", 500, "number of items per page.html file. A new page.html file is created whenever index.html contains 2x that number")
 var flagVerbose = flag.Bool("verbose", false, "verbose mode outputs extra info when enabled")
 var flagTemplateFile = flag.String("template", "", "custom Go html/template file to use when generating .html files. See `news/feed/template.go`")
 var flagOPMLFile = flag.String("opml", "", "path to OPML file containing feed URLS to be imported. Existing feed URLs are ovewritten, not duplicated")
-var flagMinDomainRequestInterval = flag.Int("noflood", 30, "minium seconds between calls to same domain to avoid flooding")
+var flagMinDomainRequestInterval = flag.Duration("noflood", 30*time.Second, "minium seconds between calls to same domain to avoid flooding")
 
 func main() {
 	flag.Parse()
-	*flagTimeout = minMax(*flagTimeout, 1, 60)
+	*flagTimeout = minMaxDuration(*flagTimeout, time.Second, time.Minute)
 	*flagItemsPerPage = minMax(*flagItemsPerPage, 2, 500)
-	*flagUpdateInterval = minMax(*flagUpdateInterval, 1, 24*60)
-	*flagMinDomainRequestInterval = minMax(*flagMinDomainRequestInterval, 10, 24*60*60)
+	*flagUpdateInterval = minMaxDuration(*flagUpdateInterval, 1, 30*time.Minute)
+	*flagMinDomainRequestInterval = minMaxDuration(*flagMinDomainRequestInterval, 10, 24*time.Hour)
 
 	log := logrus.New()
 	log.SetLevel(logrus.InfoLevel)
@@ -48,8 +48,8 @@ func main() {
 		*flagItemsPerPage,
 		feed.MakeURLFetcher(
 			log,
-			time.Second*time.Duration(*flagMinDomainRequestInterval),
-			&http.Client{Timeout: time.Second * time.Duration(*flagTimeout)},
+			*flagMinDomainRequestInterval,
+			&http.Client{Timeout: *flagTimeout},
 		),
 	)
 	if err != nil {
@@ -71,7 +71,7 @@ func main() {
 				log.Fatalln(err)
 			}
 			log.Infof("Done. Waiting %d minutes for next update...", *flagUpdateInterval)
-			time.Sleep(time.Duration(*flagUpdateInterval) * time.Minute)
+			time.Sleep(*flagUpdateInterval)
 		}
 	}()
 
@@ -89,7 +89,11 @@ func pressCTRLCToExit() {
 	<-exitCh
 }
 
-func minMax(value int, min int, max int) int {
+func minMaxDuration(value, min, max time.Duration) time.Duration {
+	return time.Duration(minMax(int(value), int(min), int(max)))
+}
+
+func minMax(value, min, max int) int {
 	if value < min {
 		return min
 	} else if value > max {
