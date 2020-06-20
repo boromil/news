@@ -3,7 +3,6 @@
 
 *.exe
 debug.test
-/vendor
 /feed/test_data/news
 /docs
 /news

@@ -46,8 +46,8 @@ func Test_OPMLFileImport(t *testing.T) {
 		t.Errorf("Expected 69 feeds URL in aggregator but found %d", len(agg.Feeds))
 	}
 	//
-	if agg.Feeds["https://www.reddit.com/r/golang/.rss"] != "/r/golang/ (test: title ovewritten from OPML)" {
-		t.Error("Title of feed with URL \"https://www.reddit.com/r/golang/.rss\" wasn't ovewritten from OPML")
+	if agg.Feeds["https://www.reddit.com/r/golang/.rss"] != "/r/golang/ (test: title overwritten from OPML)" {
+		t.Error("Title of feed with URL \"https://www.reddit.com/r/golang/.rss\" wasn't overwritten from OPML")
 	}
 	failIfError(t, agg.Update())
 }

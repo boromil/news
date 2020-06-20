@@ -36,18 +36,18 @@ news -wait 30 -dir "D:/gdrive/news"
         directory to store html files. By default ./news is used and created if necessary
   -items int
         number of items per page.html file. A new page.html file is created whenever index.html contains 2x that number (default 500)
-  -noflood int
-        minium seconds between calls to same domain to avoid flooding (default 30)
+  -noflood duration
+        minium seconds between calls to same domain to avoid flooding (default 30s)
   -opml string
-        path to OPML file containing feed URLS to be imported. Existing feed URLs are ovewritten, not duplicated
+        path to OPML file containing feed URLS to be imported. Existing feed URLs are overwritten, not duplicated
   -template news/feed/template.go
         custom Go html/template file to use when generating .html files. See news/feed/template.go
-  -timeout int
-        timeout in seconds when fetching feeds (default 10)
+  -timeout duration
+        timeout in seconds when fetching feeds (default 10s)
   -verbose
         verbose mode outputs extra info when enabled
-  -wait int
-        minutes to wait between updates (default 10)
+  -wait duration
+        minutes to wait between updates (default 10m0s)
 ```
 
 ## Running from code
@@ -70,8 +70,8 @@ Windows, Linux and OSX binaries are available in [Releases](https://github.com/w
 ## Todo
 
 - [ ] More tests
-- [ ] Go modules
-- [ ] Vendor
+- [x] Go modules
+- [x] Vendor
 - [ ] Dockerfile
 
 ## License

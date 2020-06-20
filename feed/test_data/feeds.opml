@@ -71,7 +71,7 @@
 		<outline text="totes profesh" htmlUrl="http://www.garann.com/dev" type="rss" xmlUrl="http://www.garann.com/dev/feed/"/>
 		<outline text="Web Standards Sherpa Reviews" htmlUrl="http://webstandardssherpa.com/reviews/" type="rss" xmlUrl="http://webstandardssherpa.com/apis/reviews/full-text.rss"/>
 		<outline text="When Can I Use updates" htmlUrl="http://caniuse.com/feed.php" type="rss" xmlUrl="http://feeds.feedburner.com/WhenCanIUse"/>
-		<outline text="/r/golang/ (test: title ovewritten from OPML)" htmlUrl="https://www.reddit.com/r/golang/" type="rss" xmlUrl="https://www.reddit.com/r/golang/.rss"/>
+		<outline text="/r/golang/ (test: title overwritten from OPML)" htmlUrl="https://www.reddit.com/r/golang/" type="rss" xmlUrl="https://www.reddit.com/r/golang/.rss"/>
 		<outline title="News" text="News">
 			<outline text="Writing — by Jan Lehnardt (test: nested outline)" htmlUrl="http://writing.jan.io/" type="rss" xmlUrl="http://writing.jan.io/feed.xml"/>
 		</outline>

@@ -19,7 +19,7 @@ var flagUpdateInterval = flag.Duration("wait", 10*time.Minute, "minutes to wait 
 var flagItemsPerPage = flag.Int("items", 500, "number of items per page.html file. A new page.html file is created whenever index.html contains 2x that number")
 var flagVerbose = flag.Bool("verbose", false, "verbose mode outputs extra info when enabled")
 var flagTemplateFile = flag.String("template", "", "custom Go html/template file to use when generating .html files. See `news/feed/template.go`")
-var flagOPMLFile = flag.String("opml", "", "path to OPML file containing feed URLS to be imported. Existing feed URLs are ovewritten, not duplicated")
+var flagOPMLFile = flag.String("opml", "", "path to OPML file containing feed URLS to be imported. Existing feed URLs are overwritten, not duplicated")
 var flagMinDomainRequestInterval = flag.Duration("noflood", 30*time.Second, "minium seconds between calls to same domain to avoid flooding")
 
 func main() {
