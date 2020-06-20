@@ -24,14 +24,14 @@ func Test_HTMLFileGeneratedOnNewItems(t *testing.T) {
 	if agg.Feeds["https://www.reddit.com/r/golang/.rss"] != "/r/golang" {
 		t.Error("Could not find expected '/r/golang' feed")
 	}
-	// It's safe to call Update() 40 times in hsort succession since we are using a fake URL fectcher
+	// It's safe to call Update() 40 times in succession since we are using a fake URL fetcher
 	for i := 0; i < 40; i++ {
 		failIfError(t, agg.Update())
 	}
 
 }
 
-// Tests happy path when importing OPML file including ovewriting of pre-existent feed URL
+// Tests happy path when importing OPML file including overwriting of pre-existent feed URL
 func Test_OPMLFileImport(t *testing.T) {
 	dir := "test_data/news"
 	failIfError(t, os.RemoveAll(dir))

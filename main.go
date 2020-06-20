@@ -9,8 +9,8 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/boromil/news/feed"
 	"github.com/sirupsen/logrus"
-	"github.com/ww9/news/feed"
 )
 
 var flagDir = flag.String("dir", "", "directory to store html files. By default ./news is used and created if necessary")

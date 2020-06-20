@@ -51,7 +51,12 @@ func New(directory string) (*Aggregator, error) {
 
 // NewWithCustom allows for creating customized Aggregators such as custom URL fetcher for testing or with custom http.client
 // minDomainRequestInterval is the minimum time we must wait between calls to same domain. Aka debouncer. For cases like multiple reddit.com feeds.
-func NewWithCustom(log *logrus.Logger, directory string, itemsPerPage int, URLFetcher func(URL string) ([]byte, error)) (*Aggregator, error) {
+func NewWithCustom(
+	log *logrus.Logger,
+	directory string,
+	itemsPerPage int,
+	URLFetcher func(URL string) ([]byte, error),
+) (*Aggregator, error) {
 	if directory == "" {
 		directory = "news"
 	}
@@ -129,7 +134,11 @@ func (agg *Aggregator) parseXML(XML []byte) (items []Item, err error) {
 // MakeURLFetcher is the default HTTP client used to fetch feed XML.
 // The other one is fakeURLFetcher() used for testing.
 // There's also a retired makeCachedURLFetcher() which was using during initial phases of development and is kept in misc.go
-func MakeURLFetcher(log *logrus.Logger, minDomainRequestInterval time.Duration, client *http.Client) func(URL string) (content []byte, err error) {
+func MakeURLFetcher(
+	log *logrus.Logger,
+	minDomainRequestInterval time.Duration,
+	client *http.Client,
+) func(URL string) (content []byte, err error) {
 	antiFlood := makeURLDebouncer(log, minDomainRequestInterval)
 	return func(URL string) (content []byte, err error) {
 		req, err := http.NewRequest("GET", antiFlood(URL), nil)
